@@ -25,7 +25,7 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "chd-zl-gui",
-		Width:  1170,
+		Width:  1280,
 		Height: 768,
 		AssetServer: &assetserver.Options{
 			Assets: assets,

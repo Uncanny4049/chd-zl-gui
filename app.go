@@ -45,6 +45,7 @@ func (a *App) GetCopyByDate(role string, date string) []CopyRecord {
 		log.Println(err.Error())
 		return []CopyRecord{}
 	}
+	log.Println(parsedTime)
 	byDate := services.GetCopyByDate(role, parsedTime)
 	crs := make([]CopyRecord, 0)
 	for _, item := range byDate {

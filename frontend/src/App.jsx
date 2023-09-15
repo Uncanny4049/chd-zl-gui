@@ -11,8 +11,8 @@ import dayjs from "dayjs";
 
 const columns = [
     {field: 'copyName', headerName: '副本名称', width: 300},
-    {field: 'status', headerName: '状态',width:150},
-    {field: 'actual', headerName: '次数',width:150},
+    {field: 'status', headerName: '状态', width: 150},
+    {field: 'actual', headerName: '次数', width: 150},
     {field: 'startTime', headerName: '开始时间', width: 200, valueGetter: (params) => DateFunc(params.row.startTime),},
     {field: 'endTime', headerName: '结束时间', width: 200, valueGetter: (params) => DateFunc(params.row.endTime)},
     {
@@ -30,10 +30,16 @@ const columns = [
                 let s = t % 60
                 return `${m}m${s}s`
             } else {
-                return `${t}`
+                return `${t}s`
             }
         }
     },
+    {
+        field: "other", headerName: "S/R/A", width: 150,
+        valueGetter: (params) => {
+            return params.row.type1.length + "/" + params.row.type2.length + "/" + params.row.type3.length
+        },
+    }
 
 ]
 const DateFunc = (str) => {
@@ -82,9 +88,7 @@ function App() {
     const handleChange = (event) => {
         setRoleNow(event.target.value);
         GetCopyByDate(event.target.value, date)
-            .then(t2 => {
-                setRows(pre => t2)
-            })
+            .then(t2 => setRows(t2));
     };
 
     return (
@@ -93,8 +97,9 @@ function App() {
                 <Grid item xs={4}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker defaultValue={dayjs(date)}
+                                    format="YYYY-MM-DD"
                                     onChange={(newValue) => {
-                                        setDate(pre=>{
+                                        setDate(pre => {
                                             GetCopyByDate(roleNow, newValue.toISOString())
                                                 .then(t2 => {
                                                     setRows(pre => t2)
