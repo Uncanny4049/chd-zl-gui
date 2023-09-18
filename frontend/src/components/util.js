@@ -1,4 +1,5 @@
 const SToStr = (t) => {
+    if (t === undefined) return `0秒`
     if (Math.floor(t / 3600) > 0) {
         //小时
         let h = Math.floor(t / 3600)

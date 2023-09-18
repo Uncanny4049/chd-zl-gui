@@ -6,6 +6,7 @@ import {GetCopyByDate} from "../../wailsjs/go/backend/App.js";
 import {Button} from "@mui/material";
 import Info from "./Info.jsx";
 import {DateFunc, SToStr} from "./util.js";
+import {LogInfo} from "../../wailsjs/runtime/runtime.js";
 
 
 export default function View({date, role}) {
@@ -22,7 +23,7 @@ export default function View({date, role}) {
 
     const columns = [
         {field: 'copyName', headerName: '副本名称', width: 300},
-        {field: 'status', headerName: '状态', width: 200},
+        {field: 'status', headerName: '状态', width: 100},
         {field: 'actual', headerName: '次数', width: 200},
         {
             field: 'startTime',
@@ -36,12 +37,14 @@ export default function View({date, role}) {
             width: 200,
             valueGetter: (params) => DateFunc(params.row.endTime)
         }, {
-            field: 'timeConsuming', headerName: "耗时", width: 100, valueGetter: (params) => {
+            field: 'timeConsuming', headerName: "耗时", width: 150, valueGetter: (params) => {
                 return SToStr(params.row.timeConsuming)
             }
         }, {
             field: "other", headerName: "D/R/A", width: 200, valueGetter: (params) => {
-                return params.row.type1.length + "/" + params.row.type2.length + "/" + params.row.type3.length
+                return (params.row.data[0] !== null ? params.row.data[0].length : 0) + "/" +
+                (params.row.data[1] !== null ? params.row.data[1].length : 0 )+ "/" +
+                (params.row.data[4] !== null ? params.row.data[4].length : 0)
             },
         }, {
             field: 'actions', // 按钮列的字段名

@@ -61,45 +61,96 @@ export default function Info({dialogStatus, setDialogStatus, dialogData}) {
                     <Typography variant="button" display="block" gutterBottom>
                         {`平均时间 ${SToStr(dialogData.timeConsuming / dialogData.actual)}`}
                     </Typography>
-                        <Masonry
-                            breakpointCols={2}
-                            style={{
-                                display: "flex"
-                            }}
-                        >
-                            {Array.from([dialogData.type1, dialogData.type2, dialogData.type3, dialogData.type4])
-                                .map((k, i) => (
-                                    <Typography variant="button" display="block" gutterBottom style={{
-                                        margin:'10px'
-                                    }}>
-                                        <TableContainer component={Paper}>
-                                            <Table size="small" aria-label="a dense table">
-                                                <TableHead>
-                                                    {i !== 3 && <TableRow>
-                                                        <TableCell align="left">序号</TableCell>
-                                                        <TableCell align="right">
-                                                            {i === 0 && '死亡地图'}
-                                                            {i === 1 && '掉线重连'}
-                                                            {i === 2 && '激活图鉴'}
-                                                        </TableCell>
-                                                    </TableRow>}
-                                                    {i === 3 && <TableRow>
-                                                        <TableCell align="left">获得道具</TableCell>
-                                                        <TableCell align="right">数量</TableCell>
-                                                    </TableRow>}
-                                                </TableHead>
-                                                <TableBody>
-                                                    {Object.keys(k).map((key) => (<TableRow key={key}
-                                                                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                        <TableCell align="left">{key}</TableCell>
-                                                        <TableCell align="right">{k[key]}</TableCell>
-                                                    </TableRow>))}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </Typography>
-                                ))}
-                        </Masonry>
+                    <Masonry
+                        breakpointCols={2}
+                        style={{
+                            display: "flex"
+                        }}
+                    >
+                        {dialogData.data && dialogData.data.map((k, i) => (
+                            k &&
+                            <Typography variant="button" display="block" gutterBottom style={{
+                                margin: '10px'
+                            }}>
+                                <TableContainer component={Paper}>
+                                    <Table size="small" aria-label="a dense table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell align="left">序号</TableCell>
+                                                <TableCell align="right">
+                                                    {i === 0 && '苏生复活'}
+                                                    {i === 1 && '掉线重连'}
+                                                    {i === 2 && '死亡回城'}
+                                                    {i === 3 && '特殊执行'}
+                                                    {i === 4 && '激活图鉴'}
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {k.map((row, i) => (
+                                                <TableRow key={row}
+                                                          sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                                    <TableCell align="left">{i+1}</TableCell>
+                                                    <TableCell align="right">{row}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Typography>
+                        ))}
+                        {
+                            dialogData.card && dialogData.card.length >0  &&
+                            <Typography variant="button" display="block" gutterBottom style={{
+                                margin: '10px'
+                            }}>
+                                <TableContainer component={Paper}>
+                                    <Table size="small" aria-label="a dense table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell align="left">序号</TableCell>
+                                                <TableCell align="right">翻牌</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {dialogData.card.map((row,i)=>(
+                                                <TableRow key={row}
+                                                          sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                                    <TableCell align="left">{i+1}</TableCell>
+                                                    <TableCell align="right">{row}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Typography>
+                        }
+                        {
+                            dialogData.type4 && <Typography variant="button" display="block" gutterBottom style={{
+                                margin: '10px'
+                            }}>
+                                <TableContainer component={Paper}>
+                                    <Table size="small" aria-label="a dense table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell align="left">获得道具</TableCell>
+                                                <TableCell align="right">数量</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {Object.keys(dialogData.type4).map((key) => (
+                                                <TableRow key={key}
+                                                          sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                                    <TableCell align="left">{key}</TableCell>
+                                                    <TableCell align="right">{dialogData.type4[key]}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Typography>
+                        }
+                    </Masonry>
 
                 </Stack>
             </Box>

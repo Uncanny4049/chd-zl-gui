@@ -30,10 +30,9 @@ export namespace backend {
 	    changeTitle?: string;
 	    bossEvasion?: number;
 	    doNotAttackTheLord?: number;
-	    type1: string[];
-	    type2: string[];
-	    type3: string[];
+	    data: string[][];
 	    type4: {[key: string]: number};
+	    card: string[][];
 	
 	    static createFrom(source: any = {}) {
 	        return new CopyRecord(source);
@@ -68,10 +67,9 @@ export namespace backend {
 	        this.changeTitle = source["changeTitle"];
 	        this.bossEvasion = source["bossEvasion"];
 	        this.doNotAttackTheLord = source["doNotAttackTheLord"];
-	        this.type1 = source["type1"];
-	        this.type2 = source["type2"];
-	        this.type3 = source["type3"];
+	        this.data = source["data"];
 	        this.type4 = source["type4"];
+	        this.card = source["card"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
