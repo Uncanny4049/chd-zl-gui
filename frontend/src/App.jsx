@@ -1,13 +1,13 @@
 import './App.css';
 import '@fontsource/roboto/300.css';
 import React, {useEffect, useState} from "react";
-import {GetAllRole} from "../wailsjs/go/main/App.js";
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {Container, FormControl, Grid, InputLabel, MenuItem, Select} from "@mui/material";
 import dayjs from "dayjs";
 import View from "./components/View.jsx";
+import {GetAllRole} from "../wailsjs/go/backend/App.js";
 
 
 function App() {
@@ -15,11 +15,11 @@ function App() {
     const [roleNow, setRoleNow] = useState('')
     const [date, setDate] = useState()
 
+    const updateDate = (s)=>{
+        return dayjs(s).add(8,"hour")
+    }
     useEffect(() => {
-        setDate(pre => {
-            const currentDate = new Date();
-            return dayjs(currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + "-" + currentDate.getDate())
-        })
+        setDate(updateDate(undefined))
         GetAllRole().then((t) => {
             setRole(t)
             setRoleNow(t[0])
@@ -37,10 +37,7 @@ function App() {
                         <DatePicker defaultValue={dayjs(date)}
                                     format="YYYY-MM-DD"
                                     onChange={(newValue) => {
-                                        setDate(pre => {
-                                            console.log(pre + " => " + newValue)
-                                            return newValue
-                                        })
+                                        setDate(updateDate(newValue) )
                                     }}
                         />
                     </LocalizationProvider>
